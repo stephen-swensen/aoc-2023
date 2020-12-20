@@ -6,7 +6,6 @@ let readInput fileName =
     |> Seq.map int
     |> Seq.toArray
 
-
 let run fileName =
     let input = readInput fileName
     let indices = Seq.init input.Length id

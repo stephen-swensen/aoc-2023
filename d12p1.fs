@@ -39,7 +39,6 @@ let run fileName =
     let _, (x,y) = travel input
     abs x + abs y
 
-
 module Tests =
     open NUnit.Framework
     open Swensen.Unquote
