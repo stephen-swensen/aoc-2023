@@ -1,8 +1,4 @@
-﻿module Day12Part1
-
-///A correct mod implementation that handles negative numbers
-let inline (%%) n m =
-    ((n % m) + m) % m
+﻿module D12P1
 
 let readInput fileName =
     let lines = System.IO.File.ReadAllLines fileName

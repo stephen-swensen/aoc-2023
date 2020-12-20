@@ -1,9 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <RootNamespace>aoc_2020</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="prelude.fs" />
     <Compile Include="d12p1.fs" />
+    <Compile Include="program.fs" />
   </ItemGroup>
 </Project>
