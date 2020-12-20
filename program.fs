@@ -7,16 +7,28 @@ open System
 let runCommand cmd = 
     let inputFile = cmd + ".input"
     let moduleName = cmd.ToUpper()
-    let moduleType = Type.GetType(moduleName)
+
+    let moduleType = 
+        let ty = Type.GetType(moduleName)
+        if ty |> isNull then
+            failwithf "Unable to load %s module" moduleName
+        ty
+
     let runMethod =
-        moduleType.GetMethods()
-        |> Seq.find (fun mi -> mi.Name = "run" && mi.GetParameters().Length = 1)
+        let mi =
+            moduleType.GetMethods()
+            |> Seq.tryFind (fun mi -> mi.Name = "run" && mi.GetParameters().Length = 1)
+        match mi with
+        | Some mi -> mi
+        | None -> 
+            failwithf "Unable to find `run` method taking single string argument in %s module" moduleName
+
     runMethod.Invoke(null, [|inputFile :> obj|])
 
 [<EntryPoint>]
 let main args =
     if args.Length <> 1 then
-        failwithf "Excepted command like 'd12p1' as program argument, but instead got these args: %A" args
+        failwithf "Expected command like 'd12p1' as program argument, but instead got these args: %A" args
 
     let cmd = args.[0]
     let sw = Diagnostics.Stopwatch()
