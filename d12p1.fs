@@ -1,7 +1,7 @@
 ﻿module Day12Part1
 
 ///A correct mod implementation that handles negative numbers
-let inline (%) n m =
+let inline (%%) n m =
     ((n % m) + m) % m
 
 let readInput fileName =
@@ -19,10 +19,14 @@ let move (x, y) (action, value) =
     | _ -> failwithf "Invalid action: %A" action
 
 let rotate face degrees =
+    if degrees % 90 <> 0 then
+        failwithf "Unexcepted degree rotation (must be divisible by 90): %i" degrees
+
     let step = degrees / 90 
     let compass = ['N'; 'E'; 'S'; 'W']
-    let pos = ((compass |> List.findIndex ((=)face)) + step) % 4
-    compass.[pos]
+    let facePosition = compass |> List.findIndex ((=)face)
+    let rotatedPosition = (facePosition + step) %% compass.Length
+    compass.[rotatedPosition]
 
 let travel input = 
     (('E', (0,0)), input)
@@ -39,7 +43,7 @@ let run fileName =
     let _, (x,y) = travel input
     abs x + abs y
 
-printfn "%A" (run "d12p1.input")
+printfn "%A" (run "d12p1.input") //1457
 
 let testRotate () =
     let scenarios = [
