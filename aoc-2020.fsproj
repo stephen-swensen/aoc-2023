@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <GenerateProgramFile>false</GenerateProgramFile>
     <OutputType>Exe</OutputType>
     <RootNamespace>aoc_2020</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
