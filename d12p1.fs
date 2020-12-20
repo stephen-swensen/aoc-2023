@@ -39,27 +39,26 @@ let run fileName =
     let _, (x,y) = travel input
     abs x + abs y
 
-printfn "%A" (run "d12p1.input") //1457
 
-let testRotate () =
-    let scenarios = [
-        'E', 0, 'E'
-        'E', 90, 'S'
-        'E', 180, 'W'
-        'E', 270, 'N'
-        'E', 360, 'E'
-        'E', 450, 'S'
-        'E', -90, 'N'
-        'E', -180, 'W'
-        'E', -270, 'S'
-        'E', -360, 'E'
-        'E', -450, 'N'
-    ]
-    for (face, degree, expected) as scenario in scenarios do
-        let actual = rotate face degree
-        if actual <> expected then
-            failwithf "Actual=%A did not equal expected in scenario=%A" actual scenario
+module Tests =
+    open NUnit.Framework
+    open Swensen.Unquote
 
-    printfn "All testRotate scenarios passed"
-
-//testRotate ()
+    [<Test>]
+    let ``rotate scenarios`` () =
+        let scenarios = [
+            'E', 0, 'E'
+            'E', 90, 'S'
+            'E', 180, 'W'
+            'E', 270, 'N'
+            'E', 360, 'E'
+            'E', 450, 'S'
+            'E', -90, 'N'
+            'E', -180, 'W'
+            'E', -270, 'S'
+            'E', -360, 'E'
+            'E', -450, 'N'
+        ]
+        for (face, degree, expected) as scenario in scenarios do
+            let actual = rotate face degree
+            test <@ ignore scenario; actual = expected@>
