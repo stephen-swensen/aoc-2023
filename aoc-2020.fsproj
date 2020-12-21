@@ -15,6 +15,7 @@
     <Compile Include="d02p2.fs" />
 
     <Compile Include="d03p1.fs" />
+    <Compile Include="d03p2.fs" />
 
     <Compile Include="d12p1.fs" />
     <Compile Include="program.fs" />
