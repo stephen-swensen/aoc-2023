@@ -21,13 +21,13 @@ let resolveInputReader cmd =
                       givenInput
                       p1input
 
-    InputReader.FromFile inputFile
+    inputFile, InputReader.FromFile inputFile
 
 ///Invoke a command following conventions. For example, if cmd = "d12p1", then
 ///the module function D12P1.run will be invoked with an InputReader resolved
 ///from file "d12p1.input" as its argument.
 let runCommand cmd =
-    let inputReader = resolveInputReader cmd
+    let inputFile, inputReader = resolveInputReader cmd
     let moduleName = cmd.ToUpper()
 
     let moduleType =
@@ -45,7 +45,7 @@ let runCommand cmd =
         | None ->
             failwithf "Unable to find `run` method taking single string argument in %s module" moduleName
 
-    runMethod.Invoke(null, [|inputReader :> obj|])
+    inputFile, runMethod.Invoke(null, [|inputReader :> obj|])
 
 [<EntryPoint>]
 let main args =
@@ -55,7 +55,7 @@ let main args =
     let cmd = args.[0]
     let sw = Diagnostics.Stopwatch()
     sw.Start ()
-    let result = runCommand cmd
+    let inputFile, result = runCommand cmd
     sw.Stop ()
-    printfn "%s (elapsed=%ims): %A" cmd sw.ElapsedMilliseconds result
+    printfn "%s (elapsed=%ims, input=%s): %A" cmd sw.ElapsedMilliseconds inputFile result
     0
