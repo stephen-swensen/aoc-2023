@@ -1,8 +1,8 @@
 ﻿module D12P1
 
-let readInput fileName =
-    let lines = System.IO.File.ReadAllLines fileName
-    lines 
+let parseInput inputReader =
+    let lines = inputReader.ReadAllLines ()
+    lines
     |> Seq.map (fun line -> line.[0], line.Substring(1, line.Length - 1) |> int)
     |> Seq.toList
 
@@ -18,13 +18,13 @@ let rotate face degrees =
     if degrees % 90 <> 0 then
         failwithf "Unexcepted degree rotation (must be divisible by 90): %i" degrees
 
-    let step = degrees / 90 
+    let step = degrees / 90
     let compass = ['N'; 'E'; 'S'; 'W']
     let facePosition = compass |> List.findIndex ((=)face)
     let rotatedPosition = (facePosition + step) %% compass.Length
     compass.[rotatedPosition]
 
-let travel input = 
+let travel input =
     (('E', (0,0)), input)
     ||> List.fold (fun (face, (x, y)) (action, value) ->
         match action with
@@ -34,8 +34,8 @@ let travel input =
         | 'R' -> (rotate face value), (x, y)
         | _ -> failwithf "Invalid action: %A" action)
 
-let run fileName =
-    let input = readInput fileName
+let run inputReader =
+    let input = parseInput inputReader
     let _, (x,y) = travel input
     abs x + abs y
 

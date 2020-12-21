@@ -4,23 +4,23 @@ open System
 
 type Policy = { Min: int; Max: int; Letter: char }
 
-let parseLine (line:string) = 
+let parseLine (line:string) =
     let parts = line.Split([|'-'; ' '; ':'|], StringSplitOptions.RemoveEmptyEntries)
     { Min=parts.[0] |> int
       Max=parts.[1] |> int
       Letter=parts.[2] |> char }, parts.[3]
 
-let readInput fileName =
-    let lines = System.IO.File.ReadAllLines fileName
-    lines 
+let parseInput inputReader =
+    let lines = inputReader.ReadAllLines ()
+    lines
     |> Seq.map parseLine
     |> Seq.toList
 
 let countValidPasswords input =
     let validPasswords =
         input
-        |> Seq.filter (fun (policy, password:string) -> 
-            let letterCount = 
+        |> Seq.filter (fun (policy, password:string) ->
+            let letterCount =
                 password.ToCharArray ()
                 |> Seq.filter (fun c -> c = policy.Letter)
                 |> Seq.length
@@ -28,8 +28,8 @@ let countValidPasswords input =
 
     validPasswords |> Seq.length
 
-let run fileName =
-    let input = readInput fileName
+let run inputReader =
+    let input = parseInput inputReader
     countValidPasswords input
 
 module Tests =
@@ -40,7 +40,7 @@ module Tests =
     let ``parseLine`` () =
         let line = "2-7 s: qwdngzbtsntgzmxz"
         let actual = parseLine line
-        let expected = 
+        let expected =
             { Min=2
               Max=7
               Letter='s' }, "qwdngzbtsntgzmxz"

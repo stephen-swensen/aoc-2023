@@ -10,8 +10,8 @@ let parseLine (line:string) =
       Pos2=(parts.[1] |> int) - 1
       Letter=parts.[2] |> char }, parts.[3]
 
-let readInput fileName =
-    let lines = System.IO.File.ReadAllLines fileName
+let parseInput inputReader =
+    let lines = inputReader.ReadAllLines ()
     lines
     |> Seq.map parseLine
     |> Seq.toList
@@ -25,6 +25,6 @@ let countValidPasswords input =
 
     validPasswords |> Seq.length
 
-let run fileName =
-    let input = readInput fileName
+let run inputReader =
+    let input = parseInput inputReader
     countValidPasswords input

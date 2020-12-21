@@ -1,13 +1,13 @@
 ﻿module D01P2
 
-let readInput fileName =
-    let lines = System.IO.File.ReadAllLines fileName
-    lines 
+let parseInput inputReader =
+    let lines = inputReader.ReadAllLines ()
+    lines
     |> Seq.map int
     |> Seq.toArray
 
-let run fileName =
-    let input = readInput fileName
+let run inputReader =
+    let input = parseInput inputReader
     let indices = Seq.init input.Length id
     let possibilities =
         (indices, indices)
@@ -17,6 +17,6 @@ let run fileName =
         |> Seq.filter (fun (x,y,z) -> x <> y && y <> z && x <> z)
     let (x,y,z) =
         possibilities
-        |> Seq.find (fun (x,y,z) -> 
+        |> Seq.find (fun (x,y,z) ->
             input.[x] + input.[y] + input.[z] = 2020)
     input.[x] * input.[y] * input.[z]
