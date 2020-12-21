@@ -10,7 +10,6 @@ let parseLine (line:string) =
       Max=parts.[1] |> int
       Letter=parts.[2] |> char }, parts.[3]
 
-
 let readInput fileName =
     let lines = System.IO.File.ReadAllLines fileName
     lines 
@@ -19,7 +18,16 @@ let readInput fileName =
 
 let run fileName =
     let input = readInput fileName
-    0
+    let validPasswords =
+        input
+        |> Seq.filter (fun (policy, password) -> 
+            let letterCount = 
+                password.ToCharArray ()
+                |> Seq.filter (fun c -> c = policy.Letter)
+                |> Seq.length
+            letterCount >= policy.Min && letterCount <= policy.Max)
+
+    validPasswords |> Seq.length
 
 module Tests =
     open NUnit.Framework
