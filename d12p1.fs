@@ -61,3 +61,13 @@ module Tests =
         for (face, degree, expected) as scenario in scenarios do
             let actual = rotate face degree
             test <@ ignore scenario; actual = expected@>
+
+    [<Test>]
+    let ``sample input`` () =
+        let inputText = """F10
+N3
+F7
+R90
+F11"""
+        let inputReader = InputReader.FromString inputText
+        run inputReader =! 25
