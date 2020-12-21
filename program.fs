@@ -49,13 +49,19 @@ let runCommand cmd =
 
 [<EntryPoint>]
 let main args =
-    if args.Length <> 1 then
-        failwithf "Expected command like 'd12p1' as program argument, but instead got these args: %A" args
+    let commands =
+        if args.Length = 0 then
+            IO.Directory.GetFiles(".", "d??p?.fs")
+            |> Seq.map (fun path ->
+                let fi = IO.FileInfo(path)
+                fi.Name.Substring(0, fi.Name.Length - 3))
+        else
+            args |> Seq.ofArray
 
-    let cmd = args.[0]
-    let sw = Diagnostics.Stopwatch()
-    sw.Start ()
-    let inputFile, result = runCommand cmd
-    sw.Stop ()
-    printfn "%s (elapsed=%ims, input=%s): %A" cmd sw.ElapsedMilliseconds inputFile result
+    for cmd in commands |> Seq.sort do
+        let sw = Diagnostics.Stopwatch()
+        sw.Start ()
+        let inputFile, result = runCommand cmd
+        sw.Stop ()
+        printfn "%s (elapsed=%ims, input=%s): %A" cmd sw.ElapsedMilliseconds inputFile result
     0
