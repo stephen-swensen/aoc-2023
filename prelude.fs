@@ -4,6 +4,15 @@ module Prelude
 
 open System
 
+//we alias checked operators globally since a lot of our puzzels trigger overflow conditions
+
+///Checked.(+)
+let inline (+) x y = Checked.(+) x y
+///Checked.(-)
+let inline (-) x y = Checked.(-) x y
+///Checked.(*)
+let inline (*) x y = Checked.(*) x y
+
 ///A correct mod implementation (whereas (%) is the remainder operator and may produce negative results)
 let inline (%%) n m =
     ((n % m) + m) % m
