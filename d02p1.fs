@@ -16,11 +16,10 @@ let readInput fileName =
     |> Seq.map parseLine
     |> Seq.toList
 
-let run fileName =
-    let input = readInput fileName
+let countValidPasswords input =
     let validPasswords =
         input
-        |> Seq.filter (fun (policy, password) -> 
+        |> Seq.filter (fun (policy, password:string) -> 
             let letterCount = 
                 password.ToCharArray ()
                 |> Seq.filter (fun c -> c = policy.Letter)
@@ -29,9 +28,14 @@ let run fileName =
 
     validPasswords |> Seq.length
 
+let run fileName =
+    let input = readInput fileName
+    countValidPasswords input
+
 module Tests =
     open NUnit.Framework
     open Swensen.Unquote
+
     [<Test>]
     let ``parseLine`` () =
         let line = "2-7 s: qwdngzbtsntgzmxz"
