@@ -17,7 +17,7 @@ let inline (*) x y = Checked.(*) x y
 let inline (%%) n m =
     ((n % m) + m) % m
 
-///An optimized exclusive or implementation. Logically equivalent to (<>)
+///An optimized exclusive-or implementation. Logically equivalent to (<>)
 let inline xor (x:bool) (y:bool) = (# "xor" x y : bool #)
 
 ///An interface for puzzel file input
