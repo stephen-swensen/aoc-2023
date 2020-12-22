@@ -3,13 +3,35 @@
 open System
 
 let parseInput inputReader =
-    let lines = inputReader.ReadAllLines ()
-    lines
+    let lines = inputReader.ReadAllText ()
+    let blocks = lines.Split([|"\n\n"; "\r\n"|], StringSplitOptions.None)
+    blocks
+    |> Seq.map (fun block ->
+        let pairs = block.Split([|"\n"; "\r\n"; " "|], StringSplitOptions.RemoveEmptyEntries)
+        pairs
+        |> Seq.map (fun pair ->
+            let kv = pair.Split([|':'|])
+            kv.[0], kv.[1])
+        |> dict)
+    |> Seq.toList
 
+let validKeys = Set <| [
+    "byr"
+    "iyr"
+    "eyr"
+    "hgt"
+    "hcl"
+    "ecl"
+    "pid"
+]
 
 let run inputReader =
-    let input = parseInput inputReader
-    0
+    let passports = parseInput inputReader
+
+    passports
+    |> Seq.map (fun p -> p.Keys |> Set)
+    |> Seq.filter (fun keySet -> keySet.IsSupersetOf validKeys)
+    |> Seq.length
 
 module Tests =
     open NUnit.Framework
