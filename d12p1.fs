@@ -64,10 +64,10 @@ module Tests =
 
     [<Test>]
     let ``sample input`` () =
-        let inputText = """F10
+        let text = """F10
 N3
 F7
 R90
 F11"""
-        let inputReader = InputReader.FromString inputText
-        run inputReader =! 25
+        let reader = InputReader.FromString text
+        run reader =! 25
