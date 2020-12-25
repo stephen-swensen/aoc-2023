@@ -20,6 +20,22 @@ let inline (%%) n m =
 ///An optimized exclusive-or implementation. Logically equivalent to (<>)
 let inline xor (x:bool) (y:bool) = (# "xor" x y : bool #)
 
+let (|Int32|_|) (s:string) =
+    match Int32.TryParse s with
+    | true, v -> Some v
+    | false, _ -> None
+
+///If a the regular expression match is a Success, then returns m.value * m.Groups[1..] (explicit group values).
+///If input is null, the match fails but no exception is thrown.
+let (|Regex|_|) pattern input =
+    if input |> isNull then None
+    else
+        let m = Text.RegularExpressions.Regex.Match(input, pattern)
+        if m.Success then
+            Some (m.Value, [for x in m.Groups -> x.Value].Tail)
+        else
+            None
+
 ///An interface for puzzel file input
 type InputReader = {
     ReadAllLines: unit -> string []
