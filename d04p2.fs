@@ -12,7 +12,7 @@ let parseInput inputReader =
         |> Seq.map (fun pair ->
             let kv = pair.Split([|':'|])
             kv.[0], kv.[1])
-        |> dict)
+        |> Map)
     |> Seq.toList
 
 let isValidField (key, value) =
@@ -21,7 +21,7 @@ let isValidField (key, value) =
         | false, _-> false
         | true, v -> v >= lowerBound && v <= upperBound
 
-    let validationRules = Map.ofSeq<string, string -> bool> <| [
+    let validationRules = Map.ofSeq <| [
         "byr", isNumberWithinRange 1920 2002
         "iyr", isNumberWithinRange 2010 2020
         "eyr", isNumberWithinRange 2020 2030
@@ -35,7 +35,7 @@ let isValidField (key, value) =
     | None -> true
     | Some rule -> rule value
 
-let hasRequiredFields (p:Collections.Generic.IDictionary<string,string>) =
+let hasRequiredFields (p: Collections.Generic.IDictionary<string,string>) =
     let validKeys = Set <| [
         "byr"
         "iyr"
@@ -48,7 +48,7 @@ let hasRequiredFields (p:Collections.Generic.IDictionary<string,string>) =
 
     (p.Keys |> Set).IsSupersetOf validKeys
 
-let isValidPassport (p:Collections.Generic.IDictionary<string,string>) =
+let isValidPassport p =
     hasRequiredFields p
     && (p |> Seq.forall (fun kvp -> isValidField (kvp.Key, kvp.Value)))
 
