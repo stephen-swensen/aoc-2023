@@ -16,10 +16,7 @@ let resolveInputReader cmd =
         elif IO.File.Exists p1input then
             p1input
         else
-            failwithf "No input file found for command %s, tried given input %s and fallback part 1 input %s"
-                      cmd
-                      givenInput
-                      p1input
+            failwithf $"No input file found for command %s{cmd}, tried given input %s{givenInput} and fallback part 1 input %s{p1input}"
 
     inputFile, InputReader.FromFile inputFile
 
@@ -33,7 +30,7 @@ let runCommand cmd =
     let moduleType =
         let ty = Type.GetType(moduleName)
         if ty |> isNull then
-            failwithf "Unable to load %s module" moduleName
+            failwithf $"Unable to load %s{moduleName} module"
         ty
 
     let runMethod =
@@ -43,7 +40,7 @@ let runCommand cmd =
         match mi with
         | Some mi -> mi
         | None ->
-            failwithf "Unable to find `run` method taking single string argument in %s module" moduleName
+            failwithf $"Unable to find `run` method taking single string argument in %s{moduleName} module"
 
     inputFile, runMethod.Invoke(null, [|inputReader :> obj|])
 
@@ -63,5 +60,5 @@ let main args =
         sw.Start ()
         let inputFile, result = runCommand cmd
         sw.Stop ()
-        printfn "%s (elapsed=%ims, input=%s): %A" cmd sw.ElapsedMilliseconds inputFile result
+        printfn $"%s{cmd} (elapsed=%i{sw.ElapsedMilliseconds}ms, input=%s{inputFile}): %A{result}"
     0

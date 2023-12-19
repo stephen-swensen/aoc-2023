@@ -11,7 +11,7 @@ let parseInput inputReader =
         pairs
         |> Seq.map (fun pair ->
             let kv = pair.Split([|':'|])
-            kv.[0], kv.[1])
+            kv.[0], kv[1])
         |> Map)
     |> Seq.toList
 

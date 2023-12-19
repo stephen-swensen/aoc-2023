@@ -12,11 +12,11 @@ let move (x, y) (action, value) =
     | 'S' -> x, y - value
     | 'W' -> x + value, y
     | 'E' -> x - value, y
-    | _ -> failwithf "Invalid action: %A" action
+    | _ -> failwithf $"Invalid action: %A{action}"
 
 let rotate face degrees =
     if degrees % 90 <> 0 then
-        failwithf "Unexcepted degree rotation (must be divisible by 90): %i" degrees
+        failwithf $"Unexpected degree rotation (must be divisible by 90): %i{degrees}"
 
     let step = degrees / 90
     let compass = ['N'; 'E'; 'S'; 'W']
@@ -32,7 +32,7 @@ let travel input =
         | 'F' -> face, move (x, y) (face, value)
         | 'L' -> (rotate face -value), (x, y)
         | 'R' -> (rotate face value), (x, y)
-        | _ -> failwithf "Invalid action: %A" action)
+        | _ -> failwithf $"Invalid action: %A{action}")
 
 let run inputReader =
     let input = parseInput inputReader

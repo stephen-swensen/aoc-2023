@@ -11,7 +11,7 @@ let parseInput inputReader =
         pairs
         |> Seq.map (fun pair ->
             let kv = pair.Split([|':'|])
-            kv.[0], kv.[1])
+            kv.[0], kv[1])
         |> dict)
     |> Seq.toList
 
@@ -30,7 +30,7 @@ let run inputReader =
 
     passports
     |> Seq.map (fun p -> p.Keys |> Set)
-    |> Seq.filter (fun keySet -> keySet.IsSupersetOf validKeys)
+    |> Seq.filter (_.IsSupersetOf(validKeys))
     |> Seq.length
 
 module Tests =

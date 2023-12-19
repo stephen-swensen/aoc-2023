@@ -3,7 +3,7 @@
 let parseInput inputReader =
     let lines = inputReader.ReadAllLines ()
     lines
-    |> Array.map (fun line -> line.ToCharArray())
+    |> Array.map (_.ToCharArray())
 
 let move (map: char[][]) (right, down) (curI, curJ) =
     let nextJ = curJ + down
