@@ -8,7 +8,7 @@ let parseLine (line:string) =
     let parts = line.Split([|'-'; ' '; ':'|], StringSplitOptions.RemoveEmptyEntries)
     { Min=parts.[0] |> int
       Max=parts.[1] |> int
-      Letter=parts.[2] |> char }, parts.[3]
+      Letter=parts[2] |> char }, parts[3]
 
 let parseInput inputReader =
     let lines = inputReader.ReadAllLines ()
