@@ -27,6 +27,10 @@ let (|Int32|_|) (s: string) =
   | true, v -> Some v
   | false, _ -> None
 
+let isAsciiNumber (c: Char) =
+  let c = c |> int
+  c >= 48 && c <= 57
+
 ///If a the regular expression match is a Success, then returns m.value * m.Groups[1..] (explicit group values).
 ///If input is null, the match fails but no exception is thrown.
 let (|Regex|_|) pattern input =
