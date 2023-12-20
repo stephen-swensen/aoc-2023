@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "aoc-2020", "2020\aoc-2020.fsproj", "{BE2D9CEA-5DF5-420B-AC1C-00CBBC327D14}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "aoc-2023", "2023\aoc-2023.fsproj", "{B9D5C23D-9D94-490C-8F62-A7C33D3685EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE2D9CEA-5DF5-420B-AC1C-00CBBC327D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2D9CEA-5DF5-420B-AC1C-00CBBC327D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2D9CEA-5DF5-420B-AC1C-00CBBC327D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2D9CEA-5DF5-420B-AC1C-00CBBC327D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9D5C23D-9D94-490C-8F62-A7C33D3685EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D5C23D-9D94-490C-8F62-A7C33D3685EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D5C23D-9D94-490C-8F62-A7C33D3685EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D5C23D-9D94-490C-8F62-A7C33D3685EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

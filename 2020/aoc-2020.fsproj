@@ -6,7 +6,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="prelude.fs" />
+    <Compile Include="../prelude.fs" />
 
     <Compile Include="d01p1.fs" />
     <Compile Include="d01p2.fs" />
@@ -21,7 +21,7 @@
     <Compile Include="d04p2.fs" />
 
     <Compile Include="d12p1.fs" />
-    <Compile Include="program.fs" />
+    <Compile Include="../program.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
