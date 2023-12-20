@@ -27,7 +27,7 @@ let (|Int32|_|) (s: string) =
   | true, v -> Some v
   | false, _ -> None
 
-let isAsciiNumber (c: Char) =
+let isDigit (c: Char) =
   let c = c |> int
   c >= 48 && c <= 57
 
