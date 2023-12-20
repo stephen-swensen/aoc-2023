@@ -1,6 +1,6 @@
 # aoc-fsharp
 
-Contains Advent of Code in fsharp for multiple years. Navigate to directory such as `2020` or `2023` as working dir for running commands.
+Contains Advent of Code in F# for multiple years. Navigate to directory such as `2020` or `2023` as working dir for running commands.
 
 [Advent of Code 2020](https://adventofcode.com/2020)
 
