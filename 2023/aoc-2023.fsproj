@@ -7,7 +7,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../prelude.fs" />
+    <Compile Include="d*.fs" />
     <Compile Include="../program.fs" />
+    <Content Include="*.input" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
