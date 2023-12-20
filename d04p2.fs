@@ -76,38 +76,39 @@ let run inputReader =
 
   passports |> Seq.filter isValidPassport |> Seq.length
 
-module Tests =
-  open NUnit.Framework
-  open Swensen.Unquote
+//----------------------------------------------------------
+//Tests
+open NUnit.Framework
+open Swensen.Unquote
 
-  [<Test>]
-  let ``validation scenarios`` () =
-    let scenarios =
-      [ ("byr", "1920"), true
-        ("byr", "1919"), false
-        ("hgt", "59in"), true
-        ("hgt", "58in"), false
-        ("hgt", "150cm"), true
-        ("hgt", "149cm"), false
-        ("hcl", "#abdf14"), true
-        ("hcl", "#abdf145"), false
-        ("hcl", "abdf12"), false
-        ("hcl", "abdf1234"), false
-        ("hcl", "#abdg34"), false
-        ("ecl", "blu"), true
-        ("ecl", "amb"), true
-        ("ecl", "xxx"), false
-        ("pid", "123456789"), true
-        ("pid", "1234567890"), false ]
+[<Test>]
+let ``validation scenarios test`` () =
+  let scenarios =
+    [ ("byr", "1920"), true
+      ("byr", "1919"), false
+      ("hgt", "59in"), true
+      ("hgt", "58in"), false
+      ("hgt", "150cm"), true
+      ("hgt", "149cm"), false
+      ("hcl", "#abdf14"), true
+      ("hcl", "#abdf145"), false
+      ("hcl", "abdf12"), false
+      ("hcl", "abdf1234"), false
+      ("hcl", "#abdg34"), false
+      ("ecl", "blu"), true
+      ("ecl", "amb"), true
+      ("ecl", "xxx"), false
+      ("pid", "123456789"), true
+      ("pid", "1234567890"), false ]
 
-    for scenario, expected in scenarios do
-      test <@ isValidField scenario = expected @>
+  for scenario, expected in scenarios do
+    test <@ isValidField scenario = expected @>
 
-  [<Test>]
-  let ``isValidPassport valid sample`` () =
-    let text =
-      """pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980 hcl:#623a2f"""
+[<Test>]
+let ``isValidPassport valid sample test`` () =
+  let text =
+    """pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980 hcl:#623a2f"""
 
-    let passport = trap <@ (parseInput (InputReader.FromString text)).Head @>
-    test <@ hasRequiredFields passport @>
-    test <@ isValidPassport passport @>
+  let passport = trap <@ (parseInput (InputReader.FromString text)).Head @>
+  test <@ hasRequiredFields passport @>
+  test <@ isValidPassport passport @>

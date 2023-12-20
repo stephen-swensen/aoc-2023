@@ -31,14 +31,15 @@ let run inputReader =
   let input = parseInput inputReader
   countValidPasswords input
 
-module Tests =
-  open NUnit.Framework
-  open Swensen.Unquote
+//----------------------------------------------------------
+//Tests
+open NUnit.Framework
+open Swensen.Unquote
 
-  [<Test>]
-  let ``parseLine`` () =
-    let line = "2-7 s: qwdngzbtsntgzmxz"
-    let actual = parseLine line
-    let expected = { Min = 2; Max = 7; Letter = 's' }, "qwdngzbtsntgzmxz"
+[<Test>]
+let ``parseLine test`` () =
+  let line = "2-7 s: qwdngzbtsntgzmxz"
+  let actual = parseLine line
+  let expected = { Min = 2; Max = 7; Letter = 's' }, "qwdngzbtsntgzmxz"
 
-    actual =! expected
+  actual =! expected

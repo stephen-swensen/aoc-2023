@@ -43,42 +43,43 @@ let run inputReader =
   let _, (x, y) = travel input
   abs x + abs y
 
-module Tests =
-  open NUnit.Framework
-  open Swensen.Unquote
+//----------------------------------------------------------
+//Tests
+open NUnit.Framework
+open Swensen.Unquote
 
-  [<Test>]
-  let ``rotate scenarios`` () =
-    let scenarios =
-      [ 'E', 0, 'E'
-        'E', 90, 'S'
-        'E', 180, 'W'
-        'E', 270, 'N'
-        'E', 360, 'E'
-        'E', 450, 'S'
-        'E', -90, 'N'
-        'E', -180, 'W'
-        'E', -270, 'S'
-        'E', -360, 'E'
-        'E', -450, 'N' ]
+[<Test>]
+let ``rotate scenarios test`` () =
+  let scenarios =
+    [ 'E', 0, 'E'
+      'E', 90, 'S'
+      'E', 180, 'W'
+      'E', 270, 'N'
+      'E', 360, 'E'
+      'E', 450, 'S'
+      'E', -90, 'N'
+      'E', -180, 'W'
+      'E', -270, 'S'
+      'E', -360, 'E'
+      'E', -450, 'N' ]
 
-    for (face, degree, expected) as scenario in scenarios do
-      let actual = rotate face degree
+  for (face, degree, expected) as scenario in scenarios do
+    let actual = rotate face degree
 
-      test
-        <@
-          ignore scenario
-          actual = expected
-        @>
+    test
+      <@
+        ignore scenario
+        actual = expected
+      @>
 
-  [<Test>]
-  let ``sample input`` () =
-    let text =
-      """F10
+[<Test>]
+let ``sample input test`` () =
+  let text =
+    """F10
 N3
 F7
 R90
 F11"""
 
-    let reader = InputReader.FromString text
-    run reader =! 25
+  let reader = InputReader.FromString text
+  run reader =! 25

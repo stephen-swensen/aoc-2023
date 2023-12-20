@@ -28,14 +28,15 @@ let run inputReader =
   |> Seq.filter (_.IsSupersetOf(validKeys))
   |> Seq.length
 
-module Tests =
-  open NUnit.Framework
-  open Swensen.Unquote
+//----------------------------------------------------------
+//Tests
+open NUnit.Framework
+open Swensen.Unquote
 
-  [<Test>]
-  let ``sample input`` () =
-    let text =
-      """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+[<Test>]
+let ``sample input test`` () =
+  let text =
+    """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
 
 iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
@@ -49,5 +50,5 @@ hgt:179cm
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in"""
 
-    let reader = InputReader.FromString text
-    run reader =! 2
+  let reader = InputReader.FromString text
+  run reader =! 2
