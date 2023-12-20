@@ -2,12 +2,18 @@
 
 open System
 
-type Cube = Green | Blue | Red
+type Cube =
+  | Green
+  | Blue
+  | Red
 
-type Game = { Id: int; CubeSets: ((Cube * int) Set) list }
+type Game =
+  { Id: int
+    CubeSets: ((Cube * int) Set) list }
 
 let parseInput inputReader =
   let lines = inputReader.ReadAllLines()
+
   lines
   |> Seq.map (fun line ->
     let gameString, setsString =
@@ -20,10 +26,12 @@ let parseInput inputReader =
       setsString.Split(';', StringSplitOptions.TrimEntries)
       |> Seq.map (fun setString ->
         let colorStrings = setString.Split(',', StringSplitOptions.TrimEntries)
+
         colorStrings
         |> Seq.map (fun colorString ->
           let parts = colorString.Split(' ', StringSplitOptions.TrimEntries)
           let count = parts[0] |> int
+
           let cube =
             match parts[1] with
             | "green" -> Green
@@ -32,17 +40,19 @@ let parseInput inputReader =
             | color -> failwithf $"Invalid color %s{color}"
 
           cube, count)
-        |> Set) |> Seq.toList
+        |> Set)
+      |> Seq.toList
 
     { Id = gameId; CubeSets = sets })
   |> Seq.toList
 
 let run inputReader =
   let input = parseInput inputReader
+
   input
   |> Seq.filter (fun game ->
     game.CubeSets
-    |> Seq.forall(fun cubeSet ->
+    |> Seq.forall (fun cubeSet ->
       cubeSet
       |> Seq.forall (fun (cube, count) ->
         match cube with

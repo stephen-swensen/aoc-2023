@@ -5,7 +5,9 @@ open System.Text.RegularExpressions
 
 let tokenize (line: String) =
   //overlapping matches: https://stackoverflow.com/a/320478
-  let ms = Regex.Matches(line, @"(?=(one|two|three|four|five|six|seven|eight|nine|[0-9]))")
+  let ms =
+    Regex.Matches(line, @"(?=(one|two|three|four|five|six|seven|eight|nine|[0-9]))")
+
   ms |> Seq.map (_.Groups[1].Value) |> Seq.toList
 
 let decodeLine (line: String) =
@@ -24,12 +26,10 @@ let decodeLine (line: String) =
       | s -> s)
     |> Seq.toArray
 
-  (numbers[0] + numbers[numbers.Length - 1])
-  |> int
+  (numbers[0] + numbers[numbers.Length - 1]) |> int
 
 let run inputReader =
-  inputReader.ReadAllLines()
-  |> Seq.sumBy decodeLine
+  inputReader.ReadAllLines() |> Seq.sumBy decodeLine
 
 //----------------------------------------------------------
 //Tests
@@ -38,8 +38,8 @@ open Swensen.Unquote
 
 [<Test>]
 let ``tokenize test`` () =
-  tokenize "zoneight234" =! ["one"; "eight"; "2"; "3"; "4" ]
-  tokenize "7pqrstsixteen" =! ["7"; "six" ]
+  tokenize "zoneight234" =! [ "one"; "eight"; "2"; "3"; "4" ]
+  tokenize "7pqrstsixteen" =! [ "7"; "six" ]
 
 [<Test>]
 let ``decodeLine test`` () =
@@ -59,11 +59,15 @@ let ``decodeLine test`` () =
 
 [<Test>]
 let ``run test`` () =
-  let ir = InputReader.FromString("""two1nine
+  let ir =
+    InputReader.FromString(
+      """two1nine
 eightwothree
 abcone2threexyz
 xtwone3four
 4nineeightseven2
 zoneight234
-7pqrstsixteen""")
+7pqrstsixteen"""
+    )
+
   run ir =! 281

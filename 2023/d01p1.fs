@@ -3,16 +3,12 @@
 open System
 
 let decodeLine (line: String) =
-  let numbers =
-    line.ToCharArray()
-    |> Array.filter isDigit
+  let numbers = line.ToCharArray() |> Array.filter isDigit
 
-  String([| numbers[0]; numbers[numbers.Length - 1] |])
-  |> Int32.Parse
+  String([| numbers[0]; numbers[numbers.Length - 1] |]) |> Int32.Parse
 
 let run inputReader =
-  inputReader.ReadAllLines()
-  |> Seq.sumBy decodeLine
+  inputReader.ReadAllLines() |> Seq.sumBy decodeLine
 
 //----------------------------------------------------------
 //Tests
