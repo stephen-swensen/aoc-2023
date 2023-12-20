@@ -17,3 +17,4 @@ Input files follow a naming convention. For example, `d02p2.input` is the input 
 Modules follow a naming convention. For example, "D02P2" is the code module for the `d02p2` command. It must implement a function `run: () -> InputReader`
 
 Unit tests are written with NUnit and Unquote and co-located with source code files. e.g. you can find `D12P1` module tests in the `d12p1.fs` file at the end of the file. Tests may be run with `dotnet test`.
+
