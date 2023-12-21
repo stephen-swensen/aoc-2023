@@ -48,6 +48,7 @@ let parseInput inputReader =
 
 let run inputReader =
   let games = parseInput inputReader
+
   let minSets =
     games
     |> Seq.map (fun game ->
