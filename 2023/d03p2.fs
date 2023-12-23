@@ -31,6 +31,7 @@ let parseInput inputReader =
         seq {
           if buffer <> "" && hits.Count > 0 then
             let num = Int32.Parse(buffer)
+
             for hit in hits do
               yield hit, num
 
@@ -46,8 +47,16 @@ let parseInput inputReader =
 
           for x, y in offsets do
             let i', j' = (i + x, j + y)
-            if not (i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length) && isSymbol (lines[i'][j']) then
-              ignore <| hits.Add({ Symbol = lines[i'][j']; Coords = (i', j') })
+
+            if
+              not (i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length)
+              && isSymbol (lines[i'][j'])
+            then
+              ignore
+              <| hits.Add(
+                { Symbol = lines[i'][j']
+                  Coords = (i', j') }
+              )
         else
           yield! flushBuffer ()
 
@@ -57,10 +66,10 @@ let parseInput inputReader =
 
 let run inputReader =
   let input = parseInput inputReader
+
   input
   |> Seq.groupBy fst
-  |> Seq.filter (fun (part, nums) ->
-    part.Symbol = '*' && nums |> Seq.length = 2)
+  |> Seq.filter (fun (part, nums) -> part.Symbol = '*' && nums |> Seq.length = 2)
   |> Seq.map snd
   |> Seq.map (fun nums -> nums |> Seq.map snd |> Seq.fold (*) 1)
   |> Seq.sum
