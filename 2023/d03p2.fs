@@ -1,6 +1,9 @@
 ﻿module D03P2
 
 open System
+open System.Collections.Generic
+
+type Part = { Symbol: char; Coords: int * int }
 
 let isSymbol c = c <> '.' && not (isDigit c)
 
@@ -22,15 +25,15 @@ let parseInput inputReader =
     for i in 0 .. lines.Length - 1 do
       let line = lines[i]
       let mutable buffer = ""
-      let mutable hit = false
+      let hits = HashSet<Part>()
 
       let flushBuffer () =
         seq {
-          if buffer <> "" && hit then
+          if buffer <> "" && hits.Count > 0 then
             yield Int32.Parse(buffer)
 
           buffer <- ""
-          hit <- false
+          hits.Clear()
         }
 
       for j in 0 .. line.Length - 1 do
@@ -39,16 +42,10 @@ let parseInput inputReader =
         if isDigit c then
           buffer <- buffer + (string c)
 
-          hit <-
-            hit
-            || offsets
-               |> Seq.exists (fun (x, y) ->
-                 let i', j' = (i + x, j + y)
-                 //out of bounds
-                 if i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length then
-                   false
-                 else
-                   isSymbol (lines[i'][j']))
+          for (x, y) in offsets do
+            let i', j' = (i + x, j + y)
+            if not (i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length) && isSymbol (lines[i'][j']) then
+              ignore <| hits.Add({ Symbol = lines[i'][j']; Coords = (i', j') })
         else
           yield! flushBuffer ()
 
