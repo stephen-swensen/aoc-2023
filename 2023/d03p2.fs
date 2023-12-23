@@ -30,7 +30,9 @@ let parseInput inputReader =
       let flushBuffer () =
         seq {
           if buffer <> "" && hits.Count > 0 then
-            yield Int32.Parse(buffer)
+            let num = Int32.Parse(buffer)
+            for hit in hits do
+              yield hit, num
 
           buffer <- ""
           hits.Clear()
@@ -42,7 +44,7 @@ let parseInput inputReader =
         if isDigit c then
           buffer <- buffer + (string c)
 
-          for (x, y) in offsets do
+          for x, y in offsets do
             let i', j' = (i + x, j + y)
             if not (i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length) && isSymbol (lines[i'][j']) then
               ignore <| hits.Add({ Symbol = lines[i'][j']; Coords = (i', j') })
@@ -55,7 +57,13 @@ let parseInput inputReader =
 
 let run inputReader =
   let input = parseInput inputReader
-  input |> Seq.sum
+  input
+  |> Seq.groupBy fst
+  |> Seq.filter (fun (part, nums) ->
+    part.Symbol = '*' && nums |> Seq.length = 2)
+  |> Seq.map snd
+  |> Seq.map (fun nums -> nums |> Seq.map snd |> Seq.fold (*) 1)
+  |> Seq.sum
 
 //----------------------------------------------------------
 //Tests
@@ -77,8 +85,4 @@ let ``sample test`` () =
 .664.598.."""
 
   let reader = InputReader.FromString text
-
-  for num in (parseInput reader) do
-    printfn $"%i{num}"
-
-  run reader =! 4361
+  run reader =! 467835
