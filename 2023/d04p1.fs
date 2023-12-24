@@ -2,19 +2,27 @@
 
 open System
 
-type Card = { WinningNumbers: int list; ScratchedNumbers: int list }
+type Card =
+  { WinningNumbers: int list
+    ScratchedNumbers: int list }
 
-let cardscore wins =
-  pown 2 (wins - 1)
+let cardscore wins = pown 2 (wins - 1)
 
 let parseInput inputReader =
   let lines = inputReader.ReadAllLines()
+
   lines
   |> Seq.map (fun line ->
     let arrays =
-      (line.Split(':', StringSplitOptions.TrimEntries)[1]).Split('|', StringSplitOptions.TrimEntries)
-      |> Array.map (fun nums -> nums.Split(' ', StringSplitOptions.TrimEntries ||| StringSplitOptions.RemoveEmptyEntries) |> Seq.map int |> Seq.toList)
-    { WinningNumbers = arrays[0]; ScratchedNumbers = arrays[1] })
+      (line.Split(':', StringSplitOptions.TrimEntries)[1])
+        .Split('|', StringSplitOptions.TrimEntries)
+      |> Array.map (fun nums ->
+        nums.Split(' ', StringSplitOptions.TrimEntries ||| StringSplitOptions.RemoveEmptyEntries)
+        |> Seq.map int
+        |> Seq.toList)
+
+    { WinningNumbers = arrays[0]
+      ScratchedNumbers = arrays[1] })
 
 let run inputReader =
   let input = parseInput inputReader
@@ -43,7 +51,8 @@ let ``cardscore test`` () =
 
 [<Test>]
 let ``sample input test`` () =
-  let text = """Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
+  let text =
+    """Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
 Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
 Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
