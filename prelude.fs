@@ -47,12 +47,15 @@ let (|Regex|_|) pattern input =
 ///An interface for puzzle file input
 type InputReader =
   { ReadAllLines: unit -> string[]
-    ReadAllText: unit -> string }
+    ReadAllText: unit -> string
+    ReadAllRows: unit -> char[][] }
 
   static member FromFile path =
     { ReadAllLines = (fun () -> IO.File.ReadAllLines path)
-      ReadAllText = (fun () -> IO.File.ReadAllText path) }
+      ReadAllText = (fun () -> IO.File.ReadAllText path)
+      ReadAllRows = (fun () -> IO.File.ReadAllLines path |> Array.map _.ToCharArray()) }
 
   static member FromString(text: string) =
     { ReadAllLines = (fun () -> text.Split([| "\r\n"; "\n" |], StringSplitOptions.None))
-      ReadAllText = (fun () -> text) }
+      ReadAllText = (fun () -> text)
+      ReadAllRows = (fun () -> text.Split([| "\r\n"; "\n" |], StringSplitOptions.None) |> Array.map _.ToCharArray()) }

@@ -19,11 +19,10 @@ let offsets =
     (1, -1) ] //down / left
 
 let parseInput inputReader =
-  let lines = inputReader.ReadAllLines() |> Array.map _.ToCharArray()
+  let rows = inputReader.ReadAllRows()
 
   seq {
-    for i in 0 .. lines.Length - 1 do
-      let line = lines[i]
+    for i in 0 .. rows.Length - 1 do
       let mutable buffer = ""
       let hits = HashSet<Part>()
 
@@ -39,8 +38,8 @@ let parseInput inputReader =
           hits.Clear()
         }
 
-      for j in 0 .. line.Length - 1 do
-        let c = line[j]
+      for j in 0 .. rows[i].Length - 1 do
+        let c = rows[i][j]
 
         if isDigit c then
           buffer <- buffer + (string c)
@@ -49,18 +48,18 @@ let parseInput inputReader =
             let i', j' = (i + x, j + y)
 
             if
-              not (i' = -1 || j' = -1 || i' = lines.Length || j' = line.Length)
-              && isSymbol (lines[i'][j'])
+              not (i' = -1 || j' = -1 || i' = rows[i].Length || j' = rows[i].Length)
+              && isSymbol (rows[i'][j'])
             then
               ignore
               <| hits.Add(
-                { Symbol = lines[i'][j']
+                { Symbol = rows[i'][j']
                   Coords = (i', j') }
               )
         else
           yield! flushBuffer ()
 
-        if j = line.Length - 1 then
+        if j = rows[i].Length - 1 then
           yield! flushBuffer ()
   }
 
