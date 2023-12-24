@@ -15,8 +15,8 @@ let run inputReader =
 open NUnit.Framework
 open Swensen.Unquote
 
-[<Test; Ignore("Template Test")>]
-let ``xxx test`` () =
+[<Test>]
+let ``sample input test`` () =
   let text = """"""
   let reader = InputReader.FromString text
   run reader =! 0

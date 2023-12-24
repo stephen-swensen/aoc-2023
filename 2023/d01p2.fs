@@ -58,7 +58,7 @@ let ``decodeLine test`` () =
   decodeLine "abc2x3oneight" =! 28
 
 [<Test>]
-let ``run test`` () =
+let ``sample input test`` () =
   let ir =
     InputReader.FromString(
       """two1nine

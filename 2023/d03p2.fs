@@ -79,7 +79,7 @@ open NUnit.Framework
 open Swensen.Unquote
 
 [<Test>]
-let ``sample test`` () =
+let ``sample input test`` () =
   let text =
     """467..114..
 ...*......
