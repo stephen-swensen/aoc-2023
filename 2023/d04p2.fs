@@ -4,9 +4,8 @@ open System
 
 type Card =
   { WinningNumbers: int list
-    ScratchedNumbers: int list }
-
-let cardscore wins = pown 2 (wins - 1)
+    ScratchedNumbers: int list
+    mutable Copies: int }
 
 let parseInput inputReader =
   let lines = inputReader.ReadAllLines()
@@ -22,32 +21,31 @@ let parseInput inputReader =
         |> Seq.toList)
 
     { WinningNumbers = arrays[0]
-      ScratchedNumbers = arrays[1] })
+      ScratchedNumbers = arrays[1]
+      Copies = 1 })
+  |> Seq.toArray
 
 let run inputReader =
-  let input = parseInput inputReader
+  let cards = parseInput inputReader
 
-  input
-  |> Seq.sumBy (fun card ->
+  for i in 0..cards.Length-1 do
+    let card = cards[i]
     let winners =
       card.ScratchedNumbers
       |> Seq.filter (fun sn -> card.WinningNumbers |> List.contains sn)
       |> Seq.length
 
-    cardscore winners)
+    if winners >= 1 then
+      for j in 1..winners do
+        cards[i+j].Copies <- cards[i+j].Copies + card.Copies
+
+  cards
+  |> Seq.sumBy _.Copies
 
 //----------------------------------------------------------
 //Tests
 open NUnit.Framework
 open Swensen.Unquote
-
-[<Test>]
-let ``cardscore test`` () =
-  cardscore 0 =! 0
-  cardscore 1 =! 1
-  cardscore 2 =! 2
-  cardscore 3 =! 4
-  cardscore 4 =! 8
 
 [<Test>]
 let ``sample input test`` () =
